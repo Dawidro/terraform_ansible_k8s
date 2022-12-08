@@ -39,7 +39,7 @@ Terraform code for creating 4 virtual machines to use for Kubernetes cluster. Se
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Clone and apply
+Clone and apply to start
 
 ### Prerequisites
 
