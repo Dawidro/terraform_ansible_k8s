@@ -1,7 +1,7 @@
 <h3 align="center">Terraform libvirt</h3>
 
   <p align="center">
-    Provisioning multiple 4 virtual machines for Kubernetes cluster.
+    Provisioning 4 virtual machines for Kubernetes cluster.
     <br />
     <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
     ·
@@ -33,7 +33,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-Terraform code for creating 4 virtual machines for use  as Kubernetes cluster. Setting up cluster is done by Ansible.
+Terraform code for creating 4 virtual machines to use for Kubernetes cluster. Setting up cluster is done by Ansible.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
