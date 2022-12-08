@@ -1,5 +1,3 @@
-[![MIT License][license-shield]][https://opensource.org/licenses/MIT]
-
 <h3 align="center">project_title</h3>
 
   <p align="center">
