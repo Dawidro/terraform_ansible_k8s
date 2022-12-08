@@ -1,78 +1,72 @@
-<h3 align="center">Terraform libvirt</h3>
+# Project Title
 
-  <p align="center">
-    Provisioning 4 virtual machines for Kubernetes cluster.
-    <br />
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
-  </p>
-</div>
+Terraform libvirt multiple cloud vm's
 
+## Description
 
+Using Terraform and Libvirt provisioner to deploy one Arch and three Debian virtual machines.
 
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-    </li>
-    <li>
-      <a href="#getting-started">Getting Started</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#license">License</a></li>
-  </ol>
-</details>
-
-
-
-<!-- ABOUT THE PROJECT -->
-## About The Project
-Terraform code for creating 4 virtual machines to use for Kubernetes cluster. Setting up cluster is done by Ansible.
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-<!-- GETTING STARTED -->
 ## Getting Started
 
-Clone and apply
+### Dependencies
 
-### Prerequisites
-
-In order to run it you have to have libvirt installed and configured
-
-### Installation
-
-1. Clone the repo
-   ```sh
-   git clone https://github.com/Dawidro/terraform_libvirt
-   ```
-2. Initialaise Terraform with:
-  ```sh
-  terraform init
-  ```
-3. Then make plan with:
-  ```sh
-  terraform plan
-  ```
-4. And lastly apply plan:
-  ```sh
-  terraform apply -auto-approve
-  ```
+* Qemu with KVM Hypervisor Host
 
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+### Installing
 
+* Root program directory  
+    |-volume #Storage Pool directory  
+    |-ssh  
+    | |-id_rsa.pub #Public ssh key  
+    |-sources #qcow2 cloud-images folder  
+    |-tamplets #cloud-init files  
+    | |-network_config.tpl  
+    | |-user_data.tpl  
+    |-variables.tf #Terraform variables  
+    |-main.tf #Main Terraform file  
+* terraform init
+* terraform plan
+* terraform apply -auto-approve
 
-<!-- LICENSE -->
+### Executing program
+
+* ssh vmadmin@192.168.122.101 arch
+* ssh vmadmin@192.168.122.102 debian1
+* ssh vmadmin@192.168.122.103 debian2
+* ssh vmadmin@192.168.122.104 debian3
+
+```
+sudo no password
+```
+
+## Help
+
+Runs as intended.
+```
+terraform state
+```
+
+## Authors
+
+Contributors names and contact info
+
+ex. Dawid Olesinski 
+ex. [@twitter_user](https://twitter.com/)
+
+## Version History
+
+* 0.2
+    * Various bug fixes and optimizations
+    * See [commit change]() or See [release history]()
+* 0.1
+    * Initial Release
+
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+This project is licensed under the GNU License - see the LICENSE.md file for details
 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Acknowledgments
+
+Inspiration, code snippets, etc.
+* [terrafor-libvirt-provider](https://github.com/dmacvicar/terraform-provider-libvirt)
