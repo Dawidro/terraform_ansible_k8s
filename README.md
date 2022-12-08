@@ -33,7 +33,7 @@
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
+Terraform code for creating 4 virtual machines for use  as Kubernetes cluster. Setting up cluster is done by Ansible.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
