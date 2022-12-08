@@ -49,20 +49,19 @@ In order to run it you have to have libvirt installed and configured
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/Dawidro/terraform_libvirt
    ```
-3. Initialaise Terraform with:
+2. Initialaise Terraform with:
   ```sh
   terraform init
   ```
-Then make plan with:
+3. Then make plan with:
   ```sh
   terraform plan
   ```
-And lastly apply plan:
+4. And lastly apply plan:
   ```sh
   terraform apply -auto-approve
   ```
