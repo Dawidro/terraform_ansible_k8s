@@ -1,12 +1,4 @@
-[![MIT License][license-shield]][license-url]
-
-
-<!-- PROJECT LOGO -->
-<br />
-<div align="center">
-  <a href="https://github.com/github_username/repo_name">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
-  </a>
+[![MIT License][license-shield]][https://opensource.org/licenses/MIT]
 
 <h3 align="center">project_title</h3>
 
