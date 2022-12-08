@@ -1,7 +1,7 @@
-<h3 align="center">project_title</h3>
+<h3 align="center">Terraform libvirt</h3>
 
   <p align="center">
-    project_description
+    Provisioning multiple 4 virtual machines for Kubernetes cluster.
     <br />
     <a href="https://github.com/github_username/repo_name"><strong>Explore the docs »</strong></a>
     <br />
