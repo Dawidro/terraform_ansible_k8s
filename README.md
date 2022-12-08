@@ -3,9 +3,7 @@
   <p align="center">
     Provisioning 4 virtual machines for Kubernetes cluster.
     <br />
-    <a href="https://github.com/github_username/repo_name/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/github_username/repo_name/issues">Request Feature</a>
+    <a href="https://github.com/Dawidro/terraform_ansible_k8s/issues">Report Bug</a>
   </p>
 </div>
 
@@ -51,7 +49,7 @@ In order to run it you have to have libvirt installed and configured
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/Dawidro/terraform_libvirt
+   git clone https://github.com/Dawidro/terraform_ansible_k8s
    ```
 2. Initialaise Terraform with:
   ```sh
