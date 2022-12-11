@@ -86,7 +86,23 @@ resource "null_resource" "local_execution" {
            "sudo sudo apt-mark hold linux-image-amd64",
            "sudo sudo apt-mark hold libc6",
            "sudo apt update",
-           "sudo sudo apt-get -y install git"
+           "sudo sudo apt-get -y install git",
+           "sudo sudo apt-get -y install ansible",
+           "sudo sudo apt-get -y install python3-pip",
+           "git clone https://github.com/Dawidro/ansible_kubernetes",
+           "git clone https://github.com/Dawidro/helm_ansible",
+           "cd /home/vmadmin/ansible_kubernetes/roles",
+           "git clone https://github.com/Dawidro/ansible-role-cri_o",
+           "git clone https://github.com/Oefenweb/ansible-ufw",
+           "git clone https://github.com/Dawidro/update_debian",
+           "sudo sudo apt-mark unhold linux-image-amd64",
+           "sudo sudo apt-mark unhold libc6",
+           "ansible-galaxy collection install kubernetes.core",
+           "cd /home/vmadmin/ansible_kubernetes",
+           "ansible all -i hosts -m ping -v",
+           "ansible-playbook -i hosts all.yml",
+           "ansible-playbook -i hosts master.yml",
+           "ansible-playbook -i hosts workers.yml"
        ]
    }
 }
