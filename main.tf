@@ -72,6 +72,21 @@ resource "libvirt_domain" "cloud-domain" {
   }
 }
 
+# ssh private key
+resource "tls_private_key" "id_rsa" {
+  algorithm = "RSA"
+}
+
+resource "local_file" "ssh_private_key" {
+    sensitive_content = tls_private_key.id_rsa.private_key_pem
+    filename          = "${path.module}/id_rsa"
+}
+
+resource "local_file" "ssh_public_key" {
+    sensitive_content = tls_private_key.id_rsa.public_key_openssh
+    filename          = "${path.module}/id_rsa.pub"
+}
+
 resource "null_resource" "local_execution" {
   provisioner "remote-exec" {
        connection {
@@ -82,6 +97,7 @@ resource "null_resource" "local_execution" {
        }
 
        inline = [
+           "echo '${nonsensitive(tls_private_key.id_rsa.private_key_pem)}' > /home/vmadmin/.ssh/id.rsa",
            "chmod 600 /home/vmadmin/.ssh/id.rsa",
            "sudo sudo apt-mark hold linux-image-amd64",
            "sudo sudo apt-mark hold libc6",
@@ -90,7 +106,6 @@ resource "null_resource" "local_execution" {
            "sudo sudo apt-get -y install ansible",
            "sudo sudo apt-get -y install python3-pip",
            "git clone https://github.com/Dawidro/ansible_kubernetes",
-#           "git clone https://github.com/Dawidro/helm_ansible",
            "cd /home/vmadmin/ansible_kubernetes/roles",
            "git clone https://github.com/Dawidro/ansible-role-cri_o",
            "git clone https://github.com/Oefenweb/ansible-ufw",
