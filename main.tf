@@ -106,6 +106,7 @@ resource "null_resource" "local_execution" {
            "sudo sudo apt-get -y install ansible",
            "sudo sudo apt-get -y install python3-pip",
            "git clone https://github.com/Dawidro/ansible_kubernetes",
+           "git clone https://github.com/Dawidro/k8s_labs,
            "cd /home/vmadmin/ansible_kubernetes/roles",
            "git clone https://github.com/Dawidro/ansible-role-cri_o",
            "git clone https://github.com/Oefenweb/ansible-ufw",
