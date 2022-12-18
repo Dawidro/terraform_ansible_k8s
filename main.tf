@@ -78,12 +78,12 @@ resource "tls_private_key" "id_rsa" {
 }
 
 resource "local_file" "ssh_private_key" {
-    sensitive_content = tls_private_key.id_rsa.private_key_pem
+    local_sensitive_file = tls_private_key.id_rsa.private_key_pem
     filename          = "${path.module}/id_rsa"
 }
 
 resource "local_file" "ssh_public_key" {
-    sensitive_content = tls_private_key.id_rsa.public_key_openssh
+    local_sensitive_file = tls_private_key.id_rsa.public_key_openssh
     filename          = "${path.module}/id_rsa.pub"
 }
 
