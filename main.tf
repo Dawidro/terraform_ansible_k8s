@@ -77,13 +77,13 @@ resource "tls_private_key" "id_rsa" {
   algorithm = "RSA"
 }
 
-resource "local_file" "ssh_private_key" {
-    local_sensitive_file = tls_private_key.id_rsa.private_key_pem
+resource "local_sensitive_file" "ssh_private_key" {
+    content = tls_private_key.id_rsa.private_key_pem
     filename          = "${path.module}/id_rsa"
 }
 
-resource "local_file" "ssh_public_key" {
-    local_sensitive_file = tls_private_key.id_rsa.public_key_openssh
+resource "local_sensitive_file" "ssh_public_key" {
+    content = tls_private_key.id_rsa.public_key_openssh
     filename          = "${path.module}/id_rsa.pub"
 }
 
