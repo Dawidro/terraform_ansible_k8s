@@ -14,7 +14,7 @@ provider "libvirt" {
 resource "libvirt_pool" "vmpool" {
   name = "cloud-pool"
   type = "dir"
-  path = "${path.module}/volume"
+  path = "/opt/volume"
 }
 
 resource "libvirt_volume" "vm-qcow2" {
@@ -31,7 +31,8 @@ resource "libvirt_cloudinit_disk" "commoninit" {
   pool      = libvirt_pool.vmpool.name
   user_data = templatefile("${path.module}/templates/user_data.tpl", {
       host_name = var.vm_name[count.index]
-      host_key  = "${file("${path.module}/ssh/id_rsa.pub")}"
+      host_key  = tls_private_key.id_rsa_host.public_key_openssh
+      vm_key = tls_private_key.id_rsa_vm.public_key_openssh
   })  
   
   network_config =   templatefile("${path.module}/templates/network_config.tpl", {
@@ -72,18 +73,37 @@ resource "libvirt_domain" "cloud-domain" {
   }
 }
 
-# ssh private key
-resource "tls_private_key" "id_rsa" {
+# ssh keys for host
+resource "tls_private_key" "id_rsa_host" {
   algorithm = "RSA"
 }
 
 resource "local_sensitive_file" "ssh_private_key" {
-    content = tls_private_key.id_rsa.private_key_pem
-    filename          = "${path.module}/id_rsa"
+    content = tls_private_key.id_rsa_host.private_key_pem
+    filename             = pathexpand("~/.ssh/id_rsa_vm")
+    directory_permission = "700"
+    file_permission      = "600"
 }
 
 resource "local_sensitive_file" "ssh_public_key" {
-    content = tls_private_key.id_rsa.public_key_openssh
+    content = tls_private_key.id_rsa_host.public_key_openssh
+    filename             = pathexpand("~/.ssh/id_rsa_vm.pub")
+    directory_permission = "700"
+    file_permission      = "644"
+}
+
+# ssh keys for vms
+resource "tls_private_key" "id_rsa_vm" {
+  algorithm = "RSA"
+}
+
+resource "local_sensitive_file" "ssh_private_key_vm" {
+    content = tls_private_key.id_rsa_vm.private_key_pem
+    filename          = "${path.module}/id_rsa"
+}
+
+resource "local_sensitive_file" "ssh_public_key_vm" {
+    content = tls_private_key.id_rsa_vm.public_key_openssh
     filename          = "${path.module}/id_rsa.pub"
 }
 
@@ -93,18 +113,17 @@ resource "null_resource" "local_execution" {
            user = "vmadmin"
            host = var.ips[0]
            type     = "ssh"
-           private_key = "${file("~/.ssh/id_rsa")}"
+           private_key = tls_private_key.id_rsa_host.private_key_pem
        }
 
        inline = [
-           "echo '${nonsensitive(tls_private_key.id_rsa.private_key_pem)}' > /home/vmadmin/.ssh/id.rsa",
+           "echo '${nonsensitive(tls_private_key.id_rsa_vm.private_key_pem)}' > /home/vmadmin/.ssh/id.rsa",
            "chmod 600 /home/vmadmin/.ssh/id.rsa",
-           "sudo sudo apt-mark hold linux-image-amd64",
-           "sudo sudo apt-mark hold libc6",
+           "sudo apt-mark hold linux-image-amd64 libc6 dbus systemd udev",
            "sudo apt update",
-           "sudo sudo apt-get -y install git",
-           "sudo sudo apt-get -y install ansible",
-           "sudo sudo apt-get -y install python3-pip",
+           "sudo apt-get -y install git",
+           "sudo apt-get -y install ansible",
+           "sudo apt-get -y install python3-pip",
            "git clone https://github.com/Dawidro/ansible_kubernetes",
            "git clone https://github.com/Dawidro/k8s_labs",
            "cd /home/vmadmin/ansible_kubernetes/roles",
@@ -112,8 +131,8 @@ resource "null_resource" "local_execution" {
            "git clone https://github.com/Oefenweb/ansible-ufw",
            "git clone https://github.com/Dawidro/update_debian",
            "echo '[defaults]\nhost_key_checking = False\nprivate_key_file = /home/vmadmin/.ssh/id.rsa\nremote_user = vmadmin' >> /home/vmadmin/.ansible.cfg",
-           "sudo sudo apt-mark unhold linux-image-amd64",
-           "sudo sudo apt-mark unhold libc6",
+           "sudo apt-mark unhold linux-image-amd64 libc6 dbus systemd udev",
+#           "sudo apt-mark unhold libc6",
            "ansible-galaxy collection install kubernetes.core",
            "cd /home/vmadmin/ansible_kubernetes",
            "ansible all -i hosts -m ping -v",

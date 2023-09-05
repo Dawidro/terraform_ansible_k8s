@@ -1,3 +1,4 @@
+version: 2
 ethernets:
     ${interface}:
         addresses: 
@@ -11,4 +12,3 @@ ethernets:
             - 1.1.1.1
             - 8.8.8.8
         set-name: ${interface}
-version: 2
